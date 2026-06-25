@@ -1251,7 +1251,7 @@ body { overflow-x: hidden; }
   .filter-btn { font-size: 11px; padding: 6px 12px; }
   .skills-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; padding-bottom: 4px; }
   .skill-tab { white-space: nowrap; flex-shrink: 0; }
-  #wccloud { width: 100% !important; height: 260px !important; }
+  #wccloud { display: block; }
   .contact-form input, .contact-form textarea { font-size: 16px; }
   .about-grid { gap: 32px; }
   .iit-card, .career-card { padding: 20px; }
@@ -2062,88 +2062,101 @@ const words = [
 const canvas = document.getElementById('wccloud');
 if(!canvas) return;
 const ctx = canvas.getContext('2d');
-const W = canvas.width, H = canvas.height;
 const FONT = "'Plus Jakarta Sans',Arial,sans-serif";
+const BASE_W = 1100, BASE_H = 580;
 
-function drawBg(){
+// Scale canvas to container width, maintaining aspect ratio
+function resizeCanvas(){
+  const containerW = canvas.parentElement.clientWidth || BASE_W;
+  const scale = Math.min(1, containerW / BASE_W);
+  canvas.width  = Math.round(BASE_W * scale);
+  canvas.height = Math.round(BASE_H * scale);
+  canvas.style.width  = '100%';
+  canvas.style.height = 'auto';
+  return scale;
+}
+
+let scale = resizeCanvas();
+
+function drawBg(W,H){
   ctx.clearRect(0,0,W,H);
   ctx.fillStyle='#FFFFFF';
   ctx.fillRect(0,0,W,H);
   ctx.fillStyle='rgba(180,190,220,0.3)';
-  for(let x=20;x<W;x+=26){
-    for(let y=20;y<H;y+=26){
-      ctx.beginPath();ctx.arc(x,y,1.1,0,Math.PI*2);ctx.fill();
+  const gap=26*scale;
+  for(let x=20*scale;x<W;x+=gap){
+    for(let y=20*scale;y<H;y+=gap){
+      ctx.beginPath();ctx.arc(x,y,1.1*scale,0,Math.PI*2);ctx.fill();
     }
   }
 }
-
-const placed=[];
-function overlaps(x,y,w,h){
-  for(const p of placed){
-    if(x<p.x+p.w+8&&x+w+8>p.x&&y<p.y+p.h+8&&y+h+8>p.y) return true;
-  }
-  return false;
-}
-function tryPlace(word){
-  ctx.font=`800 ${word.size}px ${FONT}`;
-  const tw=ctx.measureText(word.text).width;
-  const th=word.size*1.1;
-  for(let i=0;i<1500;i++){
-    const angle=i*0.22,radius=i*0.9;
-    const cx=W/2+radius*Math.cos(angle);
-    const cy=H/2+radius*Math.sin(angle)*0.52;
-    const x=cx-tw/2,y=cy-th/2;
-    if(x<28||x+tw>W-28||y<28||y+th>H-28) continue;
-    if(!overlaps(x,y,tw,th)){
-      placed.push({x,y,w:tw,h:th});
-      ctx.save();
-      ctx.translate(cx,cy);
-      ctx.rotate((Math.random()-0.5)*0.12);
-      if(word.size>70){ctx.shadowColor=word.color;ctx.shadowBlur=10;}
-      ctx.fillStyle=word.color;
-      ctx.globalAlpha=0.88+Math.random()*0.12;
-      ctx.font=`800 ${word.size}px ${FONT}`;
-      ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText(word.text,0,0);
-      ctx.shadowBlur=0;ctx.restore();
-      return true;
-    }
-  }
-  return false;
-}
-
-words.sort((a,b)=>b.size-a.size);
 
 function drawCloud(){
-  drawBg();
-  placed.length=0;
-  words.forEach(w=>tryPlace(w));
+  scale = resizeCanvas();
+  const W=canvas.width, H=canvas.height;
+  drawBg(W,H);
+  const placed=[];
+  function overlaps(x,y,w,h){
+    for(const p of placed){
+      if(x<p.x+p.w+6&&x+w+6>p.x&&y<p.y+p.h+6&&y+h+6>p.y) return true;
+    }
+    return false;
+  }
+  words.sort((a,b)=>b.size-a.size);
+  words.forEach(word=>{
+    const sz = Math.max(10, Math.round(word.size * scale));
+    ctx.font=`800 ${sz}px ${FONT}`;
+    const tw=ctx.measureText(word.text).width;
+    const th=sz*1.1;
+    const pad=Math.round(20*scale);
+    for(let i=0;i<1500;i++){
+      const angle=i*0.22,radius=i*0.9*scale;
+      const cx=W/2+radius*Math.cos(angle);
+      const cy=H/2+radius*Math.sin(angle)*0.52;
+      const x=cx-tw/2,y=cy-th/2;
+      if(x<pad||x+tw>W-pad||y<pad||y+th>H-pad) continue;
+      if(!overlaps(x,y,tw,th)){
+        placed.push({x,y,w:tw,h:th});
+        ctx.save();
+        ctx.translate(cx,cy);
+        ctx.rotate((Math.random()-0.5)*0.12);
+        if(sz>50){ctx.shadowColor=word.color;ctx.shadowBlur=8*scale;}
+        ctx.fillStyle=word.color;
+        ctx.globalAlpha=0.88+Math.random()*0.12;
+        ctx.font=`800 ${sz}px ${FONT}`;
+        ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(word.text,0,0);
+        ctx.shadowBlur=0;ctx.restore();
+        break;
+      }
+    }
+  });
   ctx.strokeStyle='#DDE1EE';ctx.lineWidth=1.5;
   ctx.strokeRect(1,1,W-2,H-2);
 }
 
-// Check if custom font is actually loaded vs system font
+// Font detection: compare custom font vs monospace
 function isFontLoaded(){
   const t=document.createElement('canvas').getContext('2d');
   t.font=`800 72px 'Plus Jakarta Sans',monospace`;
   const w1=t.measureText('Wg').width;
   t.font=`800 72px monospace`;
-  const w2=t.measureText('Wg').width;
-  return w1!==w2;
+  return w1!==t.measureText('Wg').width;
 }
 
 let tries=0;
 function tryDraw(){
-  if(isFontLoaded()||tries>=8){
-    drawCloud();
-  } else {
-    tries++;
-    setTimeout(tryDraw,400);
-  }
+  drawCloud();
+  if(!isFontLoaded()&&tries++<8) setTimeout(tryDraw,400);
 }
-// Start immediately (works if font cached), retry up to 8 times
-drawCloud();
-setTimeout(tryDraw,300);
+tryDraw();
+
+// Redraw on resize
+let resizeTimer;
+window.addEventListener('resize',()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(drawCloud,200);
+});
 })();
 </script>
 
