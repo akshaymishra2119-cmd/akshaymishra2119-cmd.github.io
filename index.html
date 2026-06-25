@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Akshay Mishra — Operations Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#F0F2F7;
+  --bg2:#E8EAF0;
+  --bg3:#FFFFFF;
+  --ink:#0F1117;
+  --ink2:#1E2235;
+  --muted:#6B7080;
+  --muted2:#9CA3AF;
+  --blue:#1D4ED8;
+  --blue2:#2563EB;
+  --blue-light:#EEF2FF;
+  --saffron:#EA580C;
+  --saffron-light:#FFF4EE;
+  --green:#059669;
+  --green-light:#ECFDF5;
+  --border:#D8DCE8;
+  --border2:#C8CCd8;
+  --body:'Plus Jakarta Sans',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);overflow-x:hidden;line-height:1.6}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--blue2);border-radius:2px}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;height:64px;
+  background:rgba(240,242,247,0.95);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--mono);font-size:13px;
+  color:var(--blue2);font-weight:500;letter-spacing:0.04em;
+}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-size:14px;color:var(--muted);
+  text-decoration:none;font-weight:500;
+  transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--ink)}
+.nav-resume{
+  font-family:var(--mono);font-size:12px;
+  padding:8px 20px;
+  background:var(--blue2);color:#fff;
+  text-decoration:none;border-radius:6px;
+  font-weight:500;letter-spacing:0.03em;
+  transition:background 0.2s;
+}
+.nav-resume:hover{background:var(--blue)}
+
+/* HERO */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:100px 6% 80px;
+  position:relative;
+  background:var(--bg3);
+  border-bottom:1px solid var(--border);
+}
+.hero-top-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:12px;
+  color:var(--saffron);
+  background:var(--saffron-light);
+  border:1px solid #FED7AA;
+  padding:6px 14px;border-radius:100px;
+  margin-bottom:28px;width:fit-content;
+  letter-spacing:0.04em;
+}
+.hero-top-tag::before{content:'◆';font-size:8px}
+
+h1.hero-name{
+  font-size:clamp(56px,8vw,112px);
+  font-weight:800;
+  line-height:0.95;
+  letter-spacing:-0.03em;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+h1.hero-name .stroke{
+  display:block;
+  color:transparent;
+  -webkit-text-stroke:2px var(--blue2);
+}
+.hero-role{
+  font-size:clamp(16px,2vw,22px);
+  font-weight:600;
+  color:var(--blue2);
+  letter-spacing:0.01em;
+  margin-bottom:28px;
+  margin-top:12px;
+}
+.hero-divider{
+  width:64px;height:3px;
+  background:linear-gradient(90deg,var(--blue2),var(--saffron));
+  border-radius:2px;margin-bottom:28px;
+}
+.hero-desc{
+  font-size:18px;color:var(--muted);
+  max-width:600px;line-height:1.8;
+  margin-bottom:44px;font-weight:400;
+}
+.hero-desc strong{color:var(--ink);font-weight:600}
+.hero-desc em{color:var(--saffron);font-style:normal;font-weight:600}
+
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-blue{
+  padding:14px 28px;background:var(--blue2);color:#fff;
+  font-size:14px;font-weight:600;
+  border:none;border-radius:8px;cursor:pointer;
+  text-decoration:none;display:inline-block;
+  transition:background 0.2s,transform 0.15s;
+}
+.btn-blue:hover{background:var(--blue);transform:translateY(-1px)}
+.btn-outline{
+  padding:14px 28px;background:transparent;
+  color:var(--ink);font-size:14px;font-weight:600;
+  border:1.5px solid var(--border2);border-radius:8px;
+  cursor:pointer;text-decoration:none;display:inline-block;
+  transition:border-color 0.2s;
+}
+.btn-outline:hover{border-color:var(--ink)}
+
+/* SCALE STRIP */
+#scale{
+  background:var(--ink2);
+  padding:56px 6%;
+}
+.scale-inner{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:0;
+}
+.scale-item{
+  text-align:center;padding:24px 12px;
+  border-right:1px solid rgba(255,255,255,0.08);
+}
+.scale-item:last-child{border-right:none}
+.scale-num{
+  font-size:clamp(32px,3.5vw,52px);
+  font-weight:800;color:#fff;
+  display:block;line-height:1;margin-bottom:6px;
+  letter-spacing:-0.02em;
+}
+.scale-num .acc{color:var(--saffron)}
+.scale-label{
+  font-family:var(--mono);font-size:10px;
+  color:rgba(255,255,255,0.5);
+  text-transform:uppercase;letter-spacing:0.12em;
+  line-height:1.5;
+}
+.scale-sub{
+  font-family:var(--mono);font-size:9px;
+  color:rgba(37,99,235,0.8);
+  text-transform:uppercase;letter-spacing:0.1em;
+  margin-top:5px;display:block;
+}
+
+/* SECTIONS */
+section{padding:96px 6%}
+.sec-eye{
+  font-family:var(--mono);font-size:11px;
+  color:var(--blue2);text-transform:uppercase;
+  letter-spacing:0.15em;margin-bottom:10px;
+  font-weight:500;
+}
+.sec-title{
+  font-size:clamp(32px,4vw,52px);
+  font-weight:800;letter-spacing:-0.02em;
+  line-height:1.05;margin-bottom:56px;color:var(--ink);
+}
+.sec-title span{color:var(--saffron)}
+
+/* ABOUT */
+#about{background:var(--bg)}
+.about-grid{
+  display:grid;grid-template-columns:1.3fr 0.7fr;
+  gap:72px;align-items:start;
+}
+.about-body p{
+  font-size:16px;color:var(--muted);
+  line-height:1.85;margin-bottom:22px;
+}
+.about-body p strong{color:var(--ink);font-weight:600}
+.about-body p em{color:var(--saffron);font-style:normal;font-weight:600}
+
+.iit-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-top:4px solid var(--saffron);
+  padding:28px;border-radius:10px;
+  margin-bottom:16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+}
+.iit-card-label{
+  font-family:var(--mono);font-size:10px;
+  color:var(--saffron);text-transform:uppercase;
+  letter-spacing:0.15em;margin-bottom:14px;font-weight:500;
+}
+.iit-deg{
+  font-size:20px;font-weight:700;
+  color:var(--ink);margin-bottom:4px;
+}
+.iit-school{
+  font-size:13px;color:var(--blue2);
+  font-weight:500;margin-bottom:20px;
+}
+.iit-stats{display:flex;gap:24px}
+.iit-stat-val{
+  font-size:28px;font-weight:800;
+  color:var(--saffron);display:block;
+  line-height:1;letter-spacing:-0.02em;
+}
+.iit-stat-label{
+  font-family:var(--mono);font-size:9px;
+  color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;
+}
+
+.career-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-top:4px solid var(--blue2);
+  padding:28px;border-radius:10px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+}
+.career-card-label{
+  font-family:var(--mono);font-size:10px;
+  color:var(--blue2);text-transform:uppercase;
+  letter-spacing:0.15em;margin-bottom:16px;font-weight:500;
+}
+.career-item{
+  padding:12px 0;
+  border-bottom:1px solid var(--border);
+}
+.career-item:last-child{border-bottom:none}
+.career-role{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.career-org{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* PROJECTS */
+#projects{background:var(--bg2)}
+.proj-main{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:44px;
+  margin-bottom:20px;
+  box-shadow:0 2px 16px rgba(0,0,0,0.05);
+  position:relative;overflow:hidden;
+}
+.proj-main::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--saffron),#F59E0B);
+}
+.proj-grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.proj-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:12px;padding:36px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+  position:relative;overflow:hidden;
+  transition:box-shadow 0.2s,transform 0.2s;
+}
+.proj-card:hover{
+  box-shadow:0 8px 32px rgba(0,0,0,0.1);
+  transform:translateY(-3px);
+}
+.proj-card.blue-top::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--blue2)}
+.proj-card.green-top::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--green)}
+
+.proj-eyebrow{
+  font-family:var(--mono);font-size:11px;
+  color:var(--saffron);text-transform:uppercase;
+  letter-spacing:0.12em;margin-bottom:12px;font-weight:500;
+}
+.proj-eyebrow.blue{color:var(--blue2)}
+.proj-eyebrow.green{color:var(--green)}
+.proj-title{
+  font-size:clamp(22px,2.5vw,30px);
+  font-weight:800;color:var(--ink);
+  letter-spacing:-0.02em;margin-bottom:6px;line-height:1.1;
+}
+.proj-org{
+  font-family:var(--mono);font-size:11px;
+  color:var(--muted);margin-bottom:20px;
+}
+.proj-problem{
+  font-size:14px;color:var(--muted);
+  line-height:1.75;margin-bottom:20px;
+  padding:14px 16px;
+  background:var(--bg);
+  border-left:3px solid var(--border2);
+  border-radius:0 6px 6px 0;
+}
+.proj-sub-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px;margin-bottom:22px;
+}
+.proj-sub{
+  padding:14px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+.proj-sub-title{
+  font-family:var(--mono);font-size:10px;
+  color:var(--saffron);text-transform:uppercase;
+  letter-spacing:0.1em;margin-bottom:6px;font-weight:500;
+}
+.proj-sub-title.blue{color:var(--blue2)}
+.proj-sub-title.green{color:var(--green)}
+.proj-sub p{font-size:12px;color:var(--muted);line-height:1.6}
+
+.stakeholder-row{margin-bottom:20px}
+.stakeholder-label{
+  font-family:var(--mono);font-size:10px;
+  color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.1em;margin-bottom:8px;
+}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{
+  font-size:12px;padding:4px 12px;
+  border:1px solid var(--border2);
+  color:var(--muted);border-radius:100px;
+  background:var(--bg);font-weight:500;
+}
+
+.metrics-row{
+  display:flex;gap:20px;flex-wrap:wrap;
+  padding:16px 20px;
+  background:var(--saffron-light);
+  border:1px solid #FED7AA;
+  border-radius:8px;margin-bottom:20px;
+}
+.metrics-row.blue-bg{
+  background:var(--blue-light);
+  border-color:#BFDBFE;
+}
+.metrics-row.green-bg{
+  background:var(--green-light);
+  border-color:#A7F3D0;
+}
+.metric-val{
+  font-size:22px;font-weight:800;
+  color:var(--saffron);display:block;
+  line-height:1;letter-spacing:-0.02em;
+}
+.metric-val.blue{color:var(--blue2)}
+.metric-val.green{color:var(--green)}
+.metric-label{
+  font-family:var(--mono);font-size:9px;
+  color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;
+}
+
+.stack{display:flex;flex-wrap:wrap;gap:6px}
+.stack-tag{
+  font-family:var(--mono);font-size:11px;
+  padding:4px 10px;
+  background:var(--bg);
+  border:1px solid var(--border);
+  color:var(--muted);border-radius:4px;
+}
+
+.tool-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.tool-item{
+  padding:12px 16px;
+  border-radius:6px;
+  border-left:3px solid var(--border2);
+  background:var(--bg);
+}
+.tool-item.blue{border-left-color:var(--blue2)}
+.tool-item.orange{border-left-color:var(--saffron)}
+.tool-item.emerald{border-left-color:var(--green)}
+.tool-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.tool-desc{font-size:12px;color:var(--muted)}
+
+/* ANALYTICS ARSENAL */
+#analytics{background:var(--bg)}
+.arsenal-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:12px;
+}
+.arsenal-card{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:22px 20px;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.arsenal-card:hover{
+  border-color:var(--blue2);
+  box-shadow:0 4px 16px rgba(37,99,235,0.08);
+}
+.arsenal-method{
+  font-size:16px;font-weight:700;
+  color:var(--ink);margin-bottom:6px;
+}
+.arsenal-desc{
+  font-size:12px;color:var(--muted);
+  line-height:1.6;margin-bottom:10px;
+}
+.arsenal-used{
+  font-family:var(--mono);font-size:10px;
+  color:var(--blue2);letter-spacing:0.04em;
+}
+
+/* STAKEHOLDER MAP */
+#stakeholders{background:var(--bg2)}
+.smap{
+  display:grid;grid-template-columns:200px 1fr;
+  gap:60px;align-items:center;
+}
+.smap-center-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.smap-hub{
+  width:120px;height:120px;border-radius:50%;
+  border:2px solid var(--blue2);
+  background:var(--blue-light);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.smap-hub-name{font-size:20px;font-weight:800;color:var(--blue2)}
+.smap-hub-role{font-family:var(--mono);font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em}
+.smap-hub-caption{font-family:var(--mono);font-size:10px;color:var(--muted);text-align:center;text-transform:uppercase;letter-spacing:0.1em}
+
+.smap-nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.smap-node{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:10px;padding:18px;
+  transition:border-color 0.2s;
+}
+.smap-node:hover{border-color:var(--saffron)}
+.smap-node-title{
+  font-size:13px;font-weight:700;
+  color:var(--ink);margin-bottom:6px;
+}
+.smap-node-detail{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* SKILLS */
+#skills{background:var(--bg)}
+.skills-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.skill-group{
+  background:var(--bg3);
+  border:1px solid var(--border);
+  border-radius:10px;padding:28px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03);
+}
+.skill-group-title{
+  font-size:16px;font-weight:700;color:var(--ink);
+  margin-bottom:20px;padding-bottom:14px;
+  border-bottom:2px solid var(--saffron);
+  display:inline-block;
+}
+.skill-list{list-style:none}
+.skill-list li{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:9px 0;border-bottom:1px solid var(--border);
+  font-size:13px;color:var(--muted);font-weight:500;
+}
+.skill-list li:last-child{border-bottom:none}
+.skill-bar{width:60px;height:3px;background:var(--bg2);border-radius:2px;overflow:hidden}
+.skill-fill{height:100%;background:linear-gradient(90deg,var(--blue2),#60A5FA);border-radius:2px}
+
+/* CONTACT */
+#contact{background:var(--bg2)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.contact-intro{
+  font-size:16px;color:var(--muted);
+  line-height:1.85;margin-bottom:36px;
+}
+.contact-links{display:flex;flex-direction:column}
+.clink{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 0;border-bottom:1px solid var(--border);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.clink:hover .clink-text{color:var(--saffron)}
+.clink-icon{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--blue-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:var(--blue2);flex-shrink:0;
+}
+.clink-text{font-size:14px;color:var(--muted);font-weight:500;transition:color 0.2s}
+
+.contact-form{display:flex;flex-direction:column;gap:14px}
+.field label{
+  display:block;font-family:var(--mono);font-size:11px;
+  color:var(--muted);text-transform:uppercase;
+  letter-spacing:0.1em;margin-bottom:6px;font-weight:500;
+}
+.field input,.field textarea{
+  width:100%;
+  background:var(--bg3);
+  border:1.5px solid var(--border);
+  padding:12px 14px;
+  color:var(--ink);
+  font-family:var(--body);font-size:14px;
+  outline:none;border-radius:8px;
+  transition:border-color 0.2s;resize:vertical;
+}
+.field input:focus,.field textarea:focus{border-color:var(--blue2)}
+.field input::placeholder,.field textarea::placeholder{color:var(--muted2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* FOOTER */
+footer{
+  background:var(--ink2);color:rgba(255,255,255,0.4);
+  padding:24px 6%;
+  display:flex;align-items:center;justify-content:space-between;
+  font-family:var(--mono);font-size:11px;letter-spacing:0.06em;
+}
+footer span{color:rgba(37,99,235,0.7)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.hero-top-tag{animation:fadeUp 0.5s ease 0.1s both}
+h1.hero-name{animation:fadeUp 0.6s ease 0.2s both}
+.hero-role{animation:fadeUp 0.5s ease 0.3s both}
+.hero-divider{animation:fadeUp 0.5s ease 0.35s both}
+.hero-desc{animation:fadeUp 0.6s ease 0.4s both}
+.hero-btns{animation:fadeUp 0.6s ease 0.5s both}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .about-grid,.contact-grid,.smap{grid-template-columns:1fr}
+  .proj-grid2{grid-template-columns:1fr}
+  .proj-sub-grid{grid-template-columns:1fr 1fr}
+  .arsenal-grid{grid-template-columns:repeat(2,1fr)}
+  .skills-grid{grid-template-columns:1fr 1fr}
+  .smap-nodes{grid-template-columns:repeat(2,1fr)}
+  .scale-inner{grid-template-columns:repeat(3,1fr)}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .scale-inner{grid-template-columns:repeat(2,1fr)}
+  .arsenal-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+  .smap-nodes{grid-template-columns:1fr}
+  .proj-sub-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">akshay.mishra</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#analytics">Analytics</a></li>
+    <li><a href="#stakeholders">Network</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#" class="nav-resume">Resume ↓</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-top-tag">IIT Bombay · M.A. Economics · AIR 3 · 9.0 CPI</div>
+  <h1 class="hero-name">
+    Akshay
+    <span class="stroke">Mishra.</span>
+  </h1>
+  <p class="hero-role">Operations Intelligence. At Scale.</p>
+  <div class="hero-divider"></div>
+  <p class="hero-desc">
+    I build <strong>data systems that run operations</strong> — from tracking 3 crore political beneficiaries across Bihar to deploying real-time logistics dashboards for cold chain supply networks. <em>Where data meets operations, and operations move people.</em>
+  </p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-blue">View Projects →</a>
+    <a href="#contact" class="btn-outline">Get in Touch</a>
+  </div>
+</section>
+
+<!-- SCALE STRIP -->
+<div id="scale">
+  <div class="scale-inner">
+    <div class="scale-item">
+      <span class="scale-num"><span class="acc" data-target="3">0</span>Cr+</span>
+      <span class="scale-label">Records Managed</span>
+      <span class="scale-sub">PLC · Bihar</span>
+    </div>
+    <div class="scale-item">
+      <span class="scale-num"><span data-target="125">0</span>K+</span>
+      <span class="scale-label">Members Tracked</span>
+      <span class="scale-sub">Youth Club</span>
+    </div>
+    <div class="scale-item">
+      <span class="scale-num"><span data-target="50">0</span>K</span>
+      <span class="scale-label">Villages Mapped</span>
+      <span class="scale-sub">QGIS · Bihar</span>
+    </div>
+    <div class="scale-item">
+      <span class="scale-num"><span data-target="38">0</span></span>
+      <span class="scale-label">Districts Covered</span>
+      <span class="scale-sub">End-to-End Ops</span>
+    </div>
+    <div class="scale-item">
+      <span class="scale-num"><span data-target="3">0</span></span>
+      <span class="scale-label">Tools Deployed</span>
+      <span class="scale-sub">Crystal Cold Chain</span>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="sec-eye">About</p>
+  <h2 class="sec-title">The person <span>behind the data</span></h2>
+  <div class="about-grid">
+    <div class="about-body">
+      <p>I'm a <strong>data and operations professional</strong> who has worked at the intersection of large-scale field operations, supply chain logistics, and political analytics. My career has been defined by one thing: <em>building systems that work for people operating in the field</em> — not just for analysts sitting in offices.</p>
+      <p>At <strong>I-PAC</strong>, I ran data operations for campaigns that touched every corner of Bihar — tracking beneficiary outreach for 3 crore families, mapping 50,000 villages, and managing ground teams of 100+ field personnel. At <strong>Crystal Cold Chain</strong>, I built the full suite of internal tools from scratch — a Yard Command Center, Finance Portal, and Service Complaint system used daily by technicians, managers, and accounts teams.</p>
+      <p>My approach is <em>end-to-end</em>: I design the data architecture, build the pipeline, create the dashboard, and train the people using it. <strong>Operations intelligence isn't just about the data — it's about making the data move the right people to do the right things.</strong></p>
+    </div>
+    <div>
+      <div class="iit-card">
+        <p class="iit-card-label">Academic Excellence</p>
+        <p class="iit-deg">M.A. Economics</p>
+        <p class="iit-school">Indian Institute of Technology, Bombay</p>
+        <div class="iit-stats">
+          <div><span class="iit-stat-val">9.0</span><span class="iit-stat-label">CPI</span></div>
+          <div><span class="iit-stat-val">AIR 3</span><span class="iit-stat-label">MET Rank</span></div>
+          <div><span class="iit-stat-val">Dept 3</span><span class="iit-stat-label">Dept Rank</span></div>
+        </div>
+      </div>
+      <div class="career-card">
+        <p class="career-card-label">Career Track</p>
+        <div class="career-item">
+          <p class="career-role">Data Lead</p>
+          <p class="career-org">I-PAC · Sept 2022 – Dec 2025</p>
+        </div>
+        <div class="career-item">
+          <p class="career-role">Data Analyst</p>
+          <p class="career-org">JOGGF · Jan 2024 – Mar 2025</p>
+        </div>
+        <div class="career-item">
+          <p class="career-role">Gen AI Developer</p>
+          <p class="career-org">Crystal Cold Chain · Jan – Jun 2026</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="sec-eye">Projects</p>
+  <h2 class="sec-title">What I've <span>built</span></h2>
+
+  <!-- FEATURED: I-PAC -->
+  <div class="proj-main">
+    <p class="proj-eyebrow">Political Operations · Bihar · I-PAC + JOGGF</p>
+    <h3 class="proj-title">State-Scale Political Data Operations</h3>
+    <p class="proj-org">I-PAC + JOGGF · 2022–2025</p>
+    <p class="proj-problem">Bihar's political campaigns needed real-time visibility across millions of beneficiaries, thousands of field agents, and 38 districts simultaneously — with zero tolerance for data gaps or duplication.</p>
+
+    <div class="proj-sub-grid">
+      <div class="proj-sub">
+        <p class="proj-sub-title">PLC Campaign</p>
+        <p>3 crore household data drive — largest by any political party in Indian history. AWS RDS backend, live Power BI dashboards updating hourly, fraud detection, 30+ KPI matrices.</p>
+      </div>
+      <div class="proj-sub">
+        <p class="proj-sub-title">Youth Club Network</p>
+        <p>3 clubs × 50,000 villages × 38 districts. Supply chain data for 1.25L collateral deliveries. QGIS maps, Apps Script pipelines, Looker Studio dashboards.</p>
+      </div>
+      <div class="proj-sub">
+        <p class="proj-sub-title">Vistaar Sabha</p>
+        <p>100-day campaign analytics for Bihar Badlav Yatra. Phase-wise meeting trends, Looker Studio reporting pipeline, real-time visibility for leadership.</p>
+      </div>
+    </div>
+
+    <div class="stakeholder-row">
+      <p class="stakeholder-label">Stakeholders Managed</p>
+      <div class="chips">
+        <span class="chip">Political Leadership</span>
+        <span class="chip">100+ Field Agents</span>
+        <span class="chip">District Coordinators</span>
+        <span class="chip">Strategy Teams</span>
+        <span class="chip">State Party Officials</span>
+      </div>
+    </div>
+
+    <div class="metrics-row">
+      <div><span class="metric-val">3Cr</span><span class="metric-label">Records</span></div>
+      <div><span class="metric-val">1.25L</span><span class="metric-label">Members</span></div>
+      <div><span class="metric-val">50K</span><span class="metric-label">Villages</span></div>
+      <div><span class="metric-val">38</span><span class="metric-label">Districts</span></div>
+      <div><span class="metric-val">Hourly</span><span class="metric-label">Dashboard Updates</span></div>
+    </div>
+
+    <div class="stack">
+      <span class="stack-tag">AWS RDS</span><span class="stack-tag">MySQL</span><span class="stack-tag">Power BI</span>
+      <span class="stack-tag">Python</span><span class="stack-tag">QGIS</span><span class="stack-tag">Looker Studio</span>
+      <span class="stack-tag">Apps Script</span><span class="stack-tag">Fraud Detection</span><span class="stack-tag">ETL</span>
+    </div>
+  </div>
+
+  <div class="proj-grid2">
+    <!-- Crystal Cold Chain -->
+    <div class="proj-card blue-top">
+      <p class="proj-eyebrow blue">Supply Chain · Operations · Crystal Cold Chain</p>
+      <h3 class="proj-title">Cold Chain Operations Suite</h3>
+      <p class="proj-org">Crystal Cold Chain · Jan – Jun 2026</p>
+      <p class="proj-problem">A cold chain logistics company had zero digital visibility into yard operations, technician expenses, and service complaints — everything ran on paper and WhatsApp.</p>
+
+      <div class="tool-list">
+        <div class="tool-item blue">
+          <p class="tool-name">Yard Command Center</p>
+          <p class="tool-desc">Gate In/Out · Repair · Paint · Hydra · Analytics · KPIs</p>
+        </div>
+        <div class="tool-item orange">
+          <p class="tool-name">Finance Portal</p>
+          <p class="tool-desc">Multi-role expense workflow · Line-item approvals · Email reports</p>
+        </div>
+        <div class="tool-item emerald">
+          <p class="tool-name">Service Complaint Report</p>
+          <p class="tool-desc">Interactive KPIs · Courier tracking · PDF export</p>
+        </div>
+      </div>
+
+      <div class="stakeholder-row">
+        <p class="stakeholder-label">Stakeholders</p>
+        <div class="chips">
+          <span class="chip">Technicians</span><span class="chip">Manager (Pushpaji)</span>
+          <span class="chip">Accounts</span><span class="chip">Planning (Sitaram)</span>
+        </div>
+      </div>
+
+      <div class="metrics-row blue-bg">
+        <div><span class="metric-val blue">3</span><span class="metric-label">Tools Built</span></div>
+        <div><span class="metric-val blue">5</span><span class="metric-label">Roles Served</span></div>
+        <div><span class="metric-val blue">Daily</span><span class="metric-label">Active Use</span></div>
+      </div>
+
+      <div class="stack">
+        <span class="stack-tag">Apps Script</span><span class="stack-tag">JavaScript</span>
+        <span class="stack-tag">Chart.js</span><span class="stack-tag">Sheets API</span><span class="stack-tag">Role Auth</span>
+      </div>
+    </div>
+
+    <!-- StarCampaign -->
+    <div class="proj-card green-top">
+      <p class="proj-eyebrow green">Product · Political Tech · Own Venture</p>
+      <h3 class="proj-title">StarCampaign</h3>
+      <p class="proj-org">starcampaign.in · Independent Build</p>
+      <p class="proj-problem">Indian election campaigns lacked a unified platform for candidate operations and citizen engagement — with UI accessible to low-literacy field workers.</p>
+
+      <div class="tool-list">
+        <div class="tool-item blue">
+          <p class="tool-name">Candidate Side</p>
+          <p class="tool-desc">Youth Club · Har Ghar · Badlaav · Door to Door campaigns</p>
+        </div>
+        <div class="tool-item emerald">
+          <p class="tool-name">Citizen Side</p>
+          <p class="tool-desc">Anonymous causes · Photo capture · WhatsApp sharing · Voting</p>
+        </div>
+      </div>
+
+      <div class="stakeholder-row">
+        <p class="stakeholder-label">Target Users</p>
+        <div class="chips">
+          <span class="chip">Candidates</span><span class="chip">Field Workers</span>
+          <span class="chip">Citizens</span><span class="chip">Campaign Managers</span>
+        </div>
+      </div>
+
+      <div class="metrics-row green-bg">
+        <div><span class="metric-val green">2</span><span class="metric-label">Sided Platform</span></div>
+        <div><span class="metric-val green">4</span><span class="metric-label">Campaign Types</span></div>
+        <div><span class="metric-val green">PRD</span><span class="metric-label">Documented</span></div>
+      </div>
+
+      <div class="stack">
+        <span class="stack-tag">Full-Stack</span><span class="stack-tag">GPS Capture</span>
+        <span class="stack-tag">Anonymous Auth</span><span class="stack-tag">Political Analytics</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALYTICS ARSENAL -->
+<section id="analytics">
+  <p class="sec-eye">Analytical Methods</p>
+  <h2 class="sec-title">The <span>arsenal</span></h2>
+  <div class="arsenal-grid">
+    <div class="arsenal-card">
+      <p class="arsenal-method">A/B Testing</p>
+      <p class="arsenal-desc">Controlled experiments to validate campaign strategies and feature decisions</p>
+      <p class="arsenal-used">→ Political campaign optimization</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Z-Score / T-Test</p>
+      <p class="arsenal-desc">Statistical significance testing for hypothesis validation at scale</p>
+      <p class="arsenal-used">→ Voter data significance testing</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">KPI Dashboards</p>
+      <p class="arsenal-desc">Real-time operational metrics driving field decisions at district level</p>
+      <p class="arsenal-used">→ Power BI · Looker Studio · Chart.js</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">ARIMA / SARIMA</p>
+      <p class="arsenal-desc">Time series forecasting for demand and operational planning</p>
+      <p class="arsenal-used">→ Supply chain forecasting</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Cohort Analysis</p>
+      <p class="arsenal-desc">Tracking group behaviour over time to identify operational patterns</p>
+      <p class="arsenal-used">→ Beneficiary tracking pipelines</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Funnel Analysis</p>
+      <p class="arsenal-desc">Drop-off identification across multi-step operational workflows</p>
+      <p class="arsenal-used">→ Campaign conversion tracking</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Fraud Detection</p>
+      <p class="arsenal-desc">Anomaly flagging in distribution data at crore-record scale</p>
+      <p class="arsenal-used">→ PLC Campaign · Bihar</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">ETL Pipelines</p>
+      <p class="arsenal-desc">End-to-end data ingestion, cleaning, validation, and loading</p>
+      <p class="arsenal-used">→ AWS RDS · SurveyCTO · Apps Script</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Geospatial / QGIS</p>
+      <p class="arsenal-desc">Block and AC-level mapping for field deployment and coverage</p>
+      <p class="arsenal-used">→ 50,000 villages · 9,000 panchayats</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Variance Analysis</p>
+      <p class="arsenal-desc">Decomposing operational variances into volume, price, and mix effects</p>
+      <p class="arsenal-used">→ Supply chain analytics</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Regression</p>
+      <p class="arsenal-desc">Identifying drivers of operational outcomes across field variables</p>
+      <p class="arsenal-used">→ Lead time prediction</p>
+    </div>
+    <div class="arsenal-card">
+      <p class="arsenal-method">Root Cause Analysis</p>
+      <p class="arsenal-desc">Systematic diagnosis of operational failures and performance drops</p>
+      <p class="arsenal-used">→ Supply chain disruption analysis</p>
+    </div>
+  </div>
+</section>
+
+<!-- STAKEHOLDER MAP -->
+<section id="stakeholders">
+  <p class="sec-eye">Stakeholder Network</p>
+  <h2 class="sec-title">People I've <span>coordinated</span></h2>
+  <div class="smap">
+    <div class="smap-center-wrap">
+      <div class="smap-hub">
+        <span class="smap-hub-name">AM</span>
+        <span class="smap-hub-role">Data + Ops</span>
+      </div>
+      <p class="smap-hub-caption">Hub of all operations</p>
+    </div>
+    <div class="smap-nodes">
+      <div class="smap-node">
+        <p class="smap-node-title">Political Leadership</p>
+        <p class="smap-node-detail">State party officials, campaign strategists, Bihar leadership teams</p>
+      </div>
+      <div class="smap-node">
+        <p class="smap-node-title">Field Agents</p>
+        <p class="smap-node-detail">100+ ground workers across 38 districts of Bihar</p>
+      </div>
+      <div class="smap-node">
+        <p class="smap-node-title">District Coordinators</p>
+        <p class="smap-node-detail">Linking state strategy to block-level execution</p>
+      </div>
+      <div class="smap-node">
+        <p class="smap-node-title">Technicians</p>
+        <p class="smap-node-detail">Field service teams submitting daily expense and job reports</p>
+      </div>
+      <div class="smap-node">
+        <p class="smap-node-title">Finance & Accounts</p>
+        <p class="smap-node-detail">Multi-tier approval workflows, expense reconciliation</p>
+      </div>
+      <div class="smap-node">
+        <p class="smap-node-title">Citizens / Beneficiaries</p>
+        <p class="smap-node-detail">3Cr households, anonymous platform users, cause reporters</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="sec-eye">Skills</p>
+  <h2 class="sec-title">The <span>toolkit</span></h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <p class="skill-group-title">Data Engineering</p>
+      <ul class="skill-list">
+        <li>Python (Pandas, NumPy) <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div></li>
+        <li>SQL / MySQL <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></li>
+        <li>ETL Pipelines <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></li>
+        <li>AWS RDS <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div></li>
+        <li>Google Apps Script <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></li>
+        <li>Google Sheets API <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Visualisation & BI</p>
+      <ul class="skill-list">
+        <li>Power BI <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div></li>
+        <li>Looker Studio <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div></li>
+        <li>Chart.js <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></li>
+        <li>QGIS (Geospatial) <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div></li>
+        <li>Excel / Sheets <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></li>
+        <li>HTML / CSS / JS <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></li>
+      </ul>
+    </div>
+    <div class="skill-group">
+      <p class="skill-group-title">Domain Expertise</p>
+      <ul class="skill-list">
+        <li>Supply Chain Analytics</li>
+        <li>Political Analytics</li>
+        <li>Operations Management</li>
+        <li>Fraud Detection</li>
+        <li>Geospatial Mapping</li>
+        <li>Multi-Stakeholder Mgmt</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="sec-eye">Contact</p>
+  <h2 class="sec-title">Let's <span>talk</span></h2>
+  <div class="contact-grid">
+    <div>
+      <p class="contact-intro">Whether it's a data challenge, an operations problem, or you want to build something together — reach out.</p>
+      <div class="contact-links">
+        <a href="mailto:data.work.official2026@gmail.com" class="clink">
+          <div class="clink-icon">✉</div>
+          <span class="clink-text">data.work.official2026@gmail.com</span>
+        </a>
+        <a href="https://linkedin.com/in/yourprofile" class="clink" target="_blank">
+          <div class="clink-icon">↗</div>
+          <span class="clink-text">LinkedIn</span>
+        </a>
+        <a href="https://github.com/akshaymishra2119-cmd" class="clink" target="_blank">
+          <div class="clink-icon">⌥</div>
+          <span class="clink-text">GitHub</span>
+        </a>
+        <a href="#" class="clink">
+          <div class="clink-icon">↓</div>
+          <span class="clink-text">Download Resume</span>
+        </a>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="field"><label>Name</label><input type="text" placeholder="Your name"/></div>
+        <div class="field"><label>Email</label><input type="email" placeholder="you@email.com"/></div>
+      </div>
+      <div class="field"><label>Subject</label><input type="text" placeholder="What's this about?"/></div>
+      <div class="field"><label>Message</label><textarea rows="5" placeholder="Tell me more..."></textarea></div>
+      <button type="submit" class="btn-blue" style="width:fit-content">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Akshay Mishra</span>
+  <span>Operations Intelligence. At Scale.</span>
+</footer>
+
+<script>
+// Counter animation
+function animateCounter(el, target) {
+  const duration = 1800;
+  const start = performance.now();
+  const update = (time) => {
+    const p = Math.min((time - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.floor(ease * target);
+    if (p < 1) requestAnimationFrame(update);
+    else el.textContent = target;
+  };
+  requestAnimationFrame(update);
+}
+const counters = document.querySelectorAll('[data-target]');
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter(e.target, parseInt(e.target.dataset.target));
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => obs.observe(c));
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.proj-main,.proj-card,.arsenal-card,.skill-group,.smap-node,.iit-card,.career-card');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+revealEls.forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(14px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  revealObs.observe(el);
+});
+
+// Contact form
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button');
+  btn.textContent = 'Sent ✓';
+  btn.style.background = '#059669';
+  setTimeout(() => {
+    btn.textContent = 'Send Message →';
+    btn.style.background = '';
+    e.target.reset();
+  }, 3000);
+}
+</script>
+</body>
+</html>
