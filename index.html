@@ -1185,6 +1185,94 @@ h1.hero-name .outline {
   .hero-stats { flex-wrap:wrap; }
 }
 
+/* ═══════════════════════════════════
+   MOBILE OPTIMISATION
+═══════════════════════════════════ */
+body { overflow-x: hidden; }
+
+/* Hamburger button */
+.nav-burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  background: none;
+  border: none;
+}
+.nav-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.nav-burger.open span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+.nav-burger.open span:nth-child(2){ opacity: 0; }
+.nav-burger.open span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+@media(max-width:960px){
+  .nav-burger { display: flex; }
+  .nav-resume { font-size: 11px; padding: 6px 14px; }
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: rgba(240,242,247,0.98);
+    backdrop-filter: blur(12px);
+    flex-direction: column;
+    padding: 12px 6% 20px;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    z-index: 99;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { border-bottom: 1px solid var(--border); }
+  .nav-links a { display: block; padding: 14px 0; font-size: 15px; color: var(--ink); }
+  .nav-links a:hover { color: var(--blue2); }
+}
+
+@media(max-width:600px){
+  section { padding: 56px 5%; }
+  #scale { padding: 36px 5%; }
+  .scale-inner { grid-template-columns: repeat(2,1fr) !important; }
+  .scale-item { padding: 16px 8px; }
+  .scale-num { font-size: clamp(22px,6vw,38px) !important; }
+  .scale-label { font-size: 9px; }
+  .sec-title { font-size: clamp(26px,7vw,40px) !important; margin-bottom: 32px; }
+  .hero-btns { flex-direction: column; gap: 10px; }
+  .btn-blue, .btn-outline { text-align: center; width: 100%; box-sizing: border-box; }
+  .proj-main { padding: 20px; border-radius: 12px; }
+  .proj-title { font-size: clamp(18px,5vw,24px); }
+  .proj-sub-grid { grid-template-columns: 1fr !important; }
+  .filter-bar { gap: 6px; }
+  .filter-btn { font-size: 11px; padding: 6px 12px; }
+  .skills-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; padding-bottom: 4px; }
+  .skill-tab { white-space: nowrap; flex-shrink: 0; }
+  #wccloud { width: 100% !important; height: 260px !important; }
+  .contact-form input, .contact-form textarea { font-size: 16px; }
+  .about-grid { gap: 32px; }
+  .iit-card, .career-card { padding: 20px; }
+  .iit-stats { gap: 10px; }
+  .chips { gap: 6px; }
+  .chip { font-size: 11px; padding: 4px 10px; }
+  .timeline-item { padding-left: 20px; }
+  .tl-role { font-size: 15px; }
+  .hst { padding: 8px 10px !important; min-width: 60px !important; }
+  .hst-n { font-size: 16px !important; }
+  .nav-resume { display: none; }
+  .hero-content { padding: 40px 5% 20px !important; }
+  .hero-right { height: 220px !important; }
+  .smap { padding: 20px; }
+}
+
+@media(max-width:400px){
+  h1.hero-name { font-size: 44px !important; }
+  .scale-inner { grid-template-columns: 1fr 1fr !important; }
+}
+
 </style>
 </head>
 <body>
@@ -1192,7 +1280,7 @@ h1.hero-name .outline {
 <!-- NAV -->
 <nav>
   <span class="nav-logo">akshay.mishra</span>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#analytics">Analytics</a></li>
@@ -1202,6 +1290,9 @@ h1.hero-name .outline {
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#" class="nav-resume">Resume ↓</a>
+  <button class="nav-burger" id="navBurger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1781,11 +1872,11 @@ h1.hero-name .outline {
     <div>
       <p class="contact-intro">Whether it's a data challenge, an operations problem, or you want to build something together — reach out.</p>
       <div class="contact-links">
-        <a href="mailto:data.work.official2026@gmail.com" class="clink">
+        <a href="mailto:akshay.mishra2119@gmail.com" class="clink">
           <div class="clink-icon">✉</div>
-          <span class="clink-text">data.work.official2026@gmail.com</span>
+          <span class="clink-text">akshay.mishra2119@gmail.com</span>
         </a>
-        <a href="https://linkedin.com/in/yourprofile" class="clink" target="_blank">
+        <a href="https://www.linkedin.com/in/aaksshay-mishra/?skipRedirect=true" class="clink" target="_blank">
           <div class="clink-icon">↗</div>
           <span class="clink-text">LinkedIn</span>
         </a>
@@ -2020,7 +2111,42 @@ function tryPlace(word){
   return false;
 }
 words.sort((a,b)=>b.size-a.size);
-document.fonts.ready.then(()=>{
+function drawCloud(){
   words.forEach(w=>tryPlace(w));
   ctx.strokeStyle='#DDE1EE';ctx.lineWidth=1.5;
-  ctx.beginPath();ctx.roundRect(1,1,W-2,H-2,16);ctx.stroke();
+  ctx.beginPath();
+  if(ctx.roundRect) ctx.roundRect(1,1,W-2,H-2,16);
+  else ctx.rect(1,1,W-2,H-2);
+  ctx.stroke();
+}
+// Explicitly load the font before drawing to fix GitHub Pages timing
+if(document.fonts && document.fonts.load){
+  Promise.all([
+    document.fonts.load("800 90px 'Plus Jakarta Sans'"),
+    document.fonts.load("400 16px 'Plus Jakarta Sans'")
+  ]).then(drawCloud).catch(drawCloud);
+} else {
+  setTimeout(drawCloud, 1200);
+}
+})();
+</script>
+
+<script>
+// Hamburger menu
+const burger = document.getElementById('navBurger');
+const navLinks = document.getElementById('navLinks');
+if(burger && navLinks){
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      burger.classList.remove('open');
+      navLinks.classList.remove('open');
+    });
+  });
+}
+</script>
+</body>
+</html>
